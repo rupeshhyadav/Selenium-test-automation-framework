@@ -21,10 +21,8 @@ public class TestBase {
 
 	@Parameters({ "browser", "isLamdaTest", "isHeadless" })
 	@BeforeMethod(description = "Load the home page of the website")
-	public void setUp(
-			@Optional("chrome") String browser, 
-			@Optional("false") boolean isLamdaTest,
-			@Optional("true") boolean isHeadless, ITestResult result) {
+	public void setUp(@Optional("chrome") String browser, @Optional("false") boolean isLamdaTest,
+			@Optional("false") boolean isHeadless, ITestResult result) {
 		WebDriver lamdaDriver;
 		this.isLamdaTest = isLamdaTest;
 		if (isLamdaTest) {

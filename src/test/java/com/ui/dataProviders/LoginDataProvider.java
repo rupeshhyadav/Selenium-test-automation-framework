@@ -10,6 +10,8 @@ import java.util.List;
 import org.testng.annotations.DataProvider;
 
 import com.google.gson.Gson;
+import com.ui.pojos.InvalidTestData;
+import com.ui.pojos.InvalidUser;
 import com.ui.pojos.TestData;
 import com.ui.pojos.User;
 import com.utility.CSVReaderUtility;
@@ -49,6 +51,27 @@ public class LoginDataProvider {
 	@DataProvider(name = "LoginTestXlsxDataProvider")
 	public Iterator<User> loginXlsxDataProvider() {
 		return ExcelReaderUtility.readFromXlsx();
+	}
+
+	@DataProvider(name = "InvalidLoginTestDataProvider")
+	public Iterator<Object[]> invalidLoginDataProvider() {
+		Gson gson = new Gson();
+		File file = new File(System.getProperty("user.dir") + "/testData/invalidLoginTestData.json");
+		FileReader fr;
+		InvalidTestData data = null;
+		try {
+			fr = new FileReader(file);
+			data=gson.fromJson(fr, InvalidTestData.class);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<Object[]> dataToReturn = new ArrayList<Object[]>();
+		for (InvalidUser invaliduser : data.getInvalidData()) {
+			dataToReturn.add(new Object[] { invaliduser });
+
+		}
+		return dataToReturn.iterator();
 	}
 
 }
